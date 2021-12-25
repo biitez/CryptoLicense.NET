@@ -10,28 +10,29 @@ define("DB_USER", "Database username");
 define("DB_PASS", "Database password"); 
 define("DB_DATABASE", "Database name" ); 
 
-
 /*
 
-Code completely created by https://github.com/Biitez
+Credits ;
 
-Discord: biitez#1717
-Telegram: @Biitez
-Email: biitecito@gmail.com
+https://github.com/Biitez
+    Discord: bitez#5477
+    Telegram: @Biitez
 
 */
 
-
-try
-{
+try {
     $dsn = "mysql:host=" . DB_HOST . ";dbname=" . DB_DATABASE;
-    $pdo = new PDO($dsn, DB_USER, DB_PASS);
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    
+    $options = [
+        \PDO::ATTR_ERRMODE            => \PDO::ERRMODE_EXCEPTION,
+        \PDO::ATTR_DEFAULT_FETCH_MODE => \PDO::FETCH_ASSOC,
+        \PDO::ATTR_EMULATE_PREPARES   => false,
+    ];
+    
+    $pdo = new PDO($dsn, DB_USER, DB_PASS, $options);
 }
-catch (PDOException $ex)
-{
-    echo $ex->getMessage();
-    die();
+catch (PDOException $ex) {
+    die($ex->getMessage());
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST')
